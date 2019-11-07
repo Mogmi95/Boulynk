@@ -1,0 +1,56 @@
+<b>CHAT</b>
+<br />
+
+<div id="chatMessagesList">
+
+{% for message in chat.messages %}
+
+    <div class="chatMessage">{{ message.author }} : {{ message.content }}</div>
+
+{% endfor %}
+
+</div>
+
+<input type="text" id="message-input" value="" />
+<br />
+<input type="button" onClick="postMessage()" value="SEND" />
+
+<script>
+var messagesList = document.getElementById("chatMessagesList")
+var msgInput = document.getElementById("message-input")
+var author = "LYON"
+
+function postMessage() {
+    var msg = msgInput.value
+    if (msg != "") {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText == "OK") {
+                    // Update the message list
+                    var newMessage = document.createElement("div");
+                    newMessage.appendChild(document.createTextNode(author + " : " + msg))
+                    messagesList.appendChild(newMessage)
+                }
+            }
+        };
+        xhttp.open("POST", "/chat/api/add", true);
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify({
+            "message": msg,
+            "author": author
+        }));
+    }
+}
+
+// Intercept the Enter event to send the message
+window.addEventListener("keydown",function (e) {
+    if (e.keyCode === 13) {
+            e.preventDefault();
+            postMessage();
+            msgInput.value = "";
+        }
+    }
+)
+
+</script>
