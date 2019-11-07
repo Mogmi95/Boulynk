@@ -1,0 +1,79 @@
+<html>
+<body>
+<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<!--
+Ask the user the size of the grid and the number of bomb
+Print a Size by Size grid and return the position on click
+-->
+<form action="PayslipServlet" method="get" >
+    Size (between 10 and 40): <input type="number" name="size" id="size" min="10" max="40"><br />
+    Nb_Bomb (between 1 and 40): <input type="number" name="nb_bomb" id="nb_bomb" min="1" max="40"><br />
+     <span id="result"></span><br />
+    <input type="button" value="GO !" onClick="init_grid()">
+</form>
+
+<script>
+    function p(v,w) {
+        console.log(v,w)
+    }
+    /*
+        Once the user click on the validation button:
+         - Print a debug board
+         - Send size and number of bomb to the api
+    */
+
+
+    function init_grid()
+    {
+        // Send size
+        get_size(document.getElementById('size').value);
+        get_nb_bomb(document.getElementById('nb_bomb').value);
+        // demo board
+        var x = document.getElementById('size').value;
+        var y = document.getElementById('size').value;
+        var nb_bomb = document.getElementById('nb_bomb').value;
+        var text = "";
+        for (var i = 0; i < x; i++)
+        {
+            for(var j = 0; j < y; j++)
+            {
+                var t = [i,j];
+                text+=`<div style="width:30px;height:30px;display:inline-block;background-color:green" id="${(x*i+j)}" onClick="send_pos(${i},${j})">#</div>`;
+            }
+            text+='<br>';
+            
+        }
+        document.getElementById("result").innerHTML = text;         
+    }
+
+    function get_size(size)
+    {
+        $.post("/size/" + size, function(data, status){
+            console.log(status, data);
+        })
+    }
+
+    function get_nb_bomb(nb_bomb)
+    {
+        $.post("/nb_bomb/" + nb_bomb, function(data, status){
+            console.log(status, data);
+        })
+    }
+
+
+    function send_pos(i,j)
+    {
+        var pos = [i, j]
+        $.post("/pos", pos, method=function(data, status){
+            console.log(data);
+            $(`#10`).text(data[1])
+        })
+
+    }
+
+</script>
+
+</body>
+</html>

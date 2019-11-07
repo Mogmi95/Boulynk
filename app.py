@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from run import db, app
 from models import Chat, ChatMessage
 import config
@@ -12,15 +12,34 @@ def hello():
         to_show=var,
         )
 
-
 @app.route("/jquery_extend_api.js")
 def jquery_extend_api():
     return render_template(
         "jquery_extend_api.js"
         )
-@app.route("/game")
-def gras():
-    return "<b>TEST</b>"
+
+@app.route("/size/<size>", methods=['POST'])
+def get_size(size):
+    print(size)
+    return size
+
+@app.route("/nb_bomb/<nb_bomb>", methods=['POST'])
+def get_nb_bomb(nb_bomb):
+    print(nb_bomb)
+    return nb_bomb
+
+@app.route("/pos", methods=['POST'])
+def get_pos():
+    pos = request.json(force=True)
+    print(pos)
+    return jsonify(pos)
+
+@app.route("/games/demineur")
+def demineur():
+
+    return render_template(
+        "demineur.html",
+    )
 
 @app.route("/api/homedata")
 def api_data():
