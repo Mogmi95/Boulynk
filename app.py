@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-app = Flask(__name__)
+from run import db, app
 
 @app.route("/")
 def hello():
@@ -18,5 +18,10 @@ def api_data():
     print("ef")
     return "{'test': 42}"
 
+# Chat
+
+
+
 if __name__ == "__main__":
+    db.create_all()
     app.run(port="5000", debug=True, threaded=True)
