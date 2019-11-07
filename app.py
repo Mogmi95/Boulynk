@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, jsonify
 from run import db, app
 from models import Chat, ChatMessage
 import config
@@ -12,6 +12,12 @@ def hello():
         to_show=var,
         )
 
+
+@app.route("/jquery_extend_api.js")
+def jquery_extend_api():
+    return render_template(
+        "jquery_extend_api.js"
+        )
 @app.route("/game")
 def gras():
     return "<b>TEST</b>"
