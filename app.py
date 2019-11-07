@@ -10,14 +10,18 @@ def hello():
         to_show=var,
         )
 
-@app.route("/game")
-def gras():
-    return "<b>TEST</b>"
+@app.route("/size/<size>")
+def api_search(size):
+    print(size)
+    return "succes"
 
-@app.route("/api/homedata")
-def api_data():
-    print("ef")
-    return "{'test': 42}"
+@app.route("/games/demineur")
+def demineur():
+
+    return render_template(
+        "demineur.html",
+    )
+
 
 # Chat
 

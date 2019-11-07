@@ -1,0 +1,78 @@
+<html>
+<body>
+<!--
+Ask the user the size of the grid and the number of bomb
+Print a Size by Size grid and return the position on click
+-->
+<form action="PayslipServlet" method="get" >
+    Size (between 10 and 40): <input type="number" name="size" id="size" min="10" max="40"><br />
+    Nb_Bomb (between 1 and 40): <input type="number" name="nb_bomb" id="nb_bomb" min="1" max="40"><br />
+     <span id="result"></span><br />
+    <input type="button" value="GO !" onClick="print_input()">
+</form>
+
+<script>
+    function p(v,w) {
+        console.log(v,w)
+    }
+    /*
+        Once the user click on the validation button:
+         - Print a debug board
+         - Send size and number of bomb to the api
+    */
+    function print_input()
+    {
+        // Send size
+        get_size(document.getElementById('size').value);
+        // demo board
+        var x = document.getElementById('size').value;
+        var y = document.getElementById('size').value;
+        var nb_bomb = document.getElementById('nb_bomb').value;
+        var text = "";
+        for (var i = 0; i < x; i++)
+        {
+            for(var j = 0; j < y; j++)
+            {
+                var t = [i,j];
+                text+=`<div style="width:30px;height:30px;display:inline-block;background-color:green" id="${(x*i+j)}" onClick="p(${i},${j})">#</div>`;
+            }
+            text+='<br>';
+            
+        }
+        document.getElementById("result").innerHTML = text;         
+    } 
+    function get_size(size)
+    {
+        var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function() {
+       
+        // };
+ 
+        xhttp.open("GET", "/size/" + size, true);
+        xhttp.send();
+    }
+
+    function get_bomb_number(bomb_number)
+    {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+       
+        };
+ 
+        xhttp.open("GET", "/search/" + x, true);
+        xhttp.send();
+    }
+
+    function sendUserImput(x, callback) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+       
+        };
+ 
+        xhttp.open("GET", "/search/" + x, true);
+        xhttp.send();
+    }
+</script>
+
+</body>
+</html>
