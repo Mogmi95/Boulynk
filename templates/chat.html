@@ -1,11 +1,9 @@
-<h3 style='color: #ccc;font-size: 30px;'>No message yet..</h3>
-<div class="message_holder"></div>
+<div class="containerChat">
+</div>
 
-<form action="" method="POST">
-  <input type="text" class="username" placeholder="User Name" />
-  <input type="text" class="message" placeholder="Messages" />
-  <input type="submit" />
-</form>
+<div>
+    <textarea id="formChat" rows="4" placeholder="Enter Message"></textarea>
+</div>
 
 <script type="text/javascript">
   var socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -26,9 +24,13 @@
   })
   socket.on('my response', function (msg) {
     console.log(msg)
-    if (typeof msg.user_name !== 'undefined') {
-      $('h3').remove()
-      $('div.message_holder').append('<div><b style="color: #000">' + msg.user_name + '</b> ' + msg.message + '</div>')
-    }
+    $('#formChat').keypress(
+      function(e){
+        if(e.keyCode==13){
+          var msg=$(this).val();
+          $('div.containerChat').append('<div><b style="color: #000">' + "XXXXXXXX" + '</b> ' + msg + '</div>')
+          $('#formChat').val("")
+        }
+    });
   })
 </script>

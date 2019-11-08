@@ -41,17 +41,30 @@
     font-size: 1.2em;
     padding-top: 2%;
 }
-#containerChat {
+.containerChat {
     position:absolute;
-    height: 35%;
-    width: 30%;
-    top: 50%;
-    left: 2%;
-    overflow: auto;
-    background-color: #007FFF;
+    height: 80%;
+    width: 80%;
+    top: 3%;
+    left: 10%;
+    overflow: hidden;
+    background-color: #ffffff;
     z-index:1;
-    text-align: center;
+    text-align: left;
     border-radius: 15px;
+}
+#formChat {
+    position:absolute;
+    height: 60px;
+    width: 80%;
+    top: 87%;
+    left: 10%;
+    overflow: auto;
+    background-color: #cecece;
+    z-index:1;
+    text-align: left;
+    border-radius: 15px;
+    resize: none;
 }
 #containerGames {
     position:absolute;
@@ -59,7 +72,7 @@
     width: 30%;
     top: 25%;
     left: 2%;
-    background-color: #C2F732;
+    background-color: rgb(158, 161, 150);
     z-index:1;
     text-align: center;
     border-radius: 15px;
