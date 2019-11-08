@@ -79,7 +79,8 @@ def get_init():
     mines = MineSweeper(size, size, nb_bomb)
     grid = mines.getGrid()
     print(grid)
-    return jsonify(grid.tolist())
+    return jsonify({"status":"Start", "grid":grid.tolist()})
+
 
 @app.route("/minesweeper/pos", methods=['POST'])
 def get_pos():
@@ -88,6 +89,6 @@ def get_pos():
     print(pos)
     X = int(pos['x'])
     Y = int(pos['y'])
-    status, grid = mines.clickOnTile(X,Y)
+    status, grid = mines.clickOnTile(X, Y)
     print(status)
-    return jsonify(grid.tolist())
+    return jsonify({"status":status, "grid":grid.tolist()})
