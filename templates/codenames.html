@@ -1,0 +1,12 @@
+Hello world! <br />
+
+{% for elt in board %}
+
+    {% if elt.status == -1 %}
+        <b>{{ elt.word }}</b>
+    {% elif elt.status == 1 %}
+        <i>{{ elt.word }}</i>
+    {% else %}
+        {{ elt.word }}
+    {% endif %}
+{% endfor %}

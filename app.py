@@ -1,6 +1,6 @@
 from flask import render_template, request, jsonify, send_from_directory
 from run import db, app
-from models import Chat, ChatMessage
+from models import Chat, ChatMessage, CodenamesGame
 import config
 import json
 import minesweeper
@@ -45,6 +45,33 @@ def add_chat_message(message, author):
     chat = Chat.query.first()
     chat.messages.append(ChatMessage(message, author))
     db.session.commit()
+
+# Codenames
+
+@app.route("/game/codenames")
+def show_codenames():
+    # Get game or None if none available
+    # TODO How to get who is playing
+    codename_game = CodenamesGame(
+        ["banana", "apple", "pizza"],
+        "LYON"
+    )
+
+    return render_template(
+        "codenames.html",
+        board=codename_game.get_public_board()
+    )
+
+@app.route("/game/codenames/api/submit/<id>")
+def api_codenames_submit(id):
+    game = CodenamesGame.query.first()
+    game.submit(id)
+    game.status
+    return game.get_public_board()
+
+@app.route("/game/codenames/api/clue/<clue>")
+def api_codenames_give_clue(clue):
+    return "OK"
 
 if __name__ == "__main__":
     db.create_all()
