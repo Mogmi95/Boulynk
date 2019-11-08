@@ -67,7 +67,7 @@ def test():
     print(test)
     return jsonify(test)
 
-mines = "prout"
+mines = None
 @app.route("/minesweeper/init", methods=['POST'])
 def get_init():
     global mines
@@ -80,6 +80,13 @@ def get_init():
     grid = mines.getGrid()
     print(grid)
     return jsonify({"status":"Start", "grid":grid.tolist()})
+
+@app.route("/minesweeper/get", methods=['GET'])
+def get_minesweeper():
+    global mines
+    if mines is None:
+        return jsonify({"status":"no_grid"})
+    return jsonify({"status":mines.status, "grid":mines.getGrid().tolist()})
 
 
 @app.route("/minesweeper/pos", methods=['POST'])

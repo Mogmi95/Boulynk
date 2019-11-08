@@ -70,4 +70,17 @@ $(document).ready(function() {
         })
     });
 
+    $.getJSON(`${back_end}/minesweeper/get`, function(data, success) {
+        if (success) {
+            console.log(data["status"])
+            if (data["status"] == "no_grid") {
+                return
+            }
+
+            updateGrid(data["grid"], data["status"] == "Start")
+        } else {
+            console.log("/minesweeper/init failed")
+        }
+    })
+
 });
