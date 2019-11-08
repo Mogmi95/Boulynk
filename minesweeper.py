@@ -14,15 +14,14 @@ class MineSweeper():
         self.nb_col   = nb_col
         self.nb_bomb  = nb_bomb
         self.status   = "playing"
-        self.score    = 0
-        self.initBoard()
 
-    def initBoard(self):
-        self.score = 0
-        self.field    = np.zeros((self.nb_lines, self.nb_col), dtype=np.int)
-        self.mask     = np.zeros((self.nb_lines, self.nb_col), dtype=np.int)
-        if (self.nb_bomb < (self.nb_col * self.nb_lines)):
-            self.bombPositions = sorted(random.sample(range(0, self.nb_col * self.nb_lines), self.nb_bomb))
+        self.field    = np.zeros((nb_lines, nb_col), dtype=np.int)
+        self.mask     = np.zeros((nb_lines, nb_col), dtype=np.int)
+        self.flagged  = np.zeros((nb_lines, nb_col), dtype=np.int)
+
+
+        if (nb_bomb < (nb_col * nb_lines)):
+            self.bombPositions = sorted(random.sample(range(0, nb_col * nb_lines), nb_bomb))
         else:
             raise Exception("Too many bombs!")
 
@@ -37,7 +36,7 @@ class MineSweeper():
                     self.smartBombAdd(a, b)
 
     def getGrid(self):
-        return self.mask * self.field
+        return (self.flaggedField())
 
     def smartBombAdd(self, line, col):
         if ((line < 0) or (col < 0) or (line > self.nb_lines-1) or (col > self.nb_col-1)):
@@ -47,23 +46,38 @@ class MineSweeper():
         else :
             self.field[line][col] = self.field[line][col] + 1
 
-    def clickOnTile(self, line, col):
-        if self.score == 0 and self.field[line][col] == -1:
-            print("Reinit board")
-            self.initBoard()
-            self.clickOnTile(line,col)
-        self.score += 1
+    def clickOnTile(self, line, col, right = False):
         if ((line < 0) or (col < 0) or (line > self.nb_lines-1) or (col > self.nb_col-1)):
             return
-        self.mask[line][col] = 1
-        if (self.field[line][col] == 0):
-            self.field[line][col] = -2
-            self.clickOnTile(line+1,col)
-            self.clickOnTile(line-1,col)
-            self.clickOnTile(line, col+1)
-            self.clickOnTile(line, col-1)
-        self.updateStatus()
-        return (self.status, self.mask * self.field)
+
+        if (right == False):
+            if (self.flagged[line][col] == 1):
+                return (self.status, self.flaggedField())
+            self.mask[line][col] = 1
+            if (self.field[line][col] == 0):
+                self.field[line][col] = -2
+                self.clickOnTile(line+1,col)
+                self.clickOnTile(line-1,col)
+                self.clickOnTile(line, col+1)
+                self.clickOnTile(line, col-1)
+            self.updateStatus()
+        else :
+            if (self.flagged[line][col] == 0):
+                if (self.mask[line][col] == 1):
+                    return
+                self.flagged[line][col] = 1
+            elif (self.flagged[line][col] == 1):
+                self.flagged[line][col] = 0
+
+        return (self.status, self.flaggedField())
+
+    def flaggedField(self) :
+        array =  self.mask * self.field
+        for a in range(0, self.nb_lines):
+            for b in range(0, self.nb_col):
+                if (self.flagged[a][b] == 1):
+                   array[a][b] = -3
+        return array
 
     def updateStatus(self):
         countMask = 0
@@ -71,6 +85,7 @@ class MineSweeper():
             self.status = 'lose'
             self.mask = np.ones((self.nb_lines, self.nb_col), dtype=np.int)
             self.field = np.where(self.field == 0, -2, self.field)
+            self.flagged = np.where(self.flagged == 1, 0, self.flagged)
             return
         if ((self.mask.sum() + len(self.bombPositions)) == (self.nb_col * self.nb_lines)):
             self.status = 'win'
@@ -159,9 +174,9 @@ def handle_grid_click(pos):
     print(pos)
     X = int(pos['x'])
     Y = int(pos['y'])
+    is_right = "right" in pos
 
-    status, grid = Global_mines[current_user.name].clickOnTile(X, Y)
-    print(Global_mines[current_user.name].getScore())
+    status, grid = Global_mines[current_user.name].clickOnTile(X, Y, is_right)
     board = {
         "status": status,
         "grid": grid.tolist()
@@ -172,7 +187,7 @@ def handle_grid_click(pos):
             socketio.emit('game_update', json.dumps({"user_board":board}), broadcast=True, room=user_name)
         else:
             socketio.emit('game_update', json.dumps({"opponent_board":board}), broadcast=True, room=user_name)
-    # emit('user_ready', f"{current_user.name} is ready", broadcast=True)
+
 
 
 @socketio.on('user_ready')

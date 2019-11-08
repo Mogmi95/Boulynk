@@ -20,13 +20,20 @@ $(document).ready(function () {
         var content = ""
         grid.forEach(function (sub, x) {
             content += `<div class="mine_row">`
-            sub.forEach(function (v, y) {
-                value = v
-                if (v <= 0) {
-                    value = " ";
-                }
+            sub.forEach(function(v, y) {
                 oddness = (x + y) % 2 == 0 ? "odd" : "even"
-                content += `<div class="mine mine_${v} ${oddness}" x="${x}" y="${y}">${value}</div>`
+                if (v == -3) {
+                    content += `<div class="mine mine_0 ${oddness}" x="${x}" y="${y}"><img style="max-width:100%";max-height:100% src="/files/flag.png"/></div>`
+
+                }
+                else
+                {
+                    value = v
+                    if (v <= 0) {
+                        value = " ";
+                    }
+                    content += `<div class="mine mine_${v} ${oddness}" x="${x}" y="${y}">${value}</div>`
+                }
             })
             content += '</div>'
         })
@@ -52,6 +59,14 @@ $(document).ready(function () {
                 var payload = { x: parseInt($(this).attr("x")), y: parseInt($(this).attr("y")) }
 
                 socket.emit('grid_click', JSON.stringify(payload))
+            })
+
+            $(`#${id} .mine`).contextmenu(function (e) {
+
+                var payload = { x: parseInt($(this).attr("x")), y: parseInt($(this).attr("y")), right:true }
+                console.log(payload)
+                socket.emit('grid_click', JSON.stringify(payload))
+                return false
             })
         }
     }
