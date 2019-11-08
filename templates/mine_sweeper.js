@@ -6,7 +6,6 @@ $(document).ready(function () {
         console.log(data)
     })
     socket.on("game_update", function (data) {
-        $("#game_config").hide()
         $("#game_board").show()
         // console.log(JSON.parse(data), data)
         data = JSON.parse(data)
@@ -32,7 +31,7 @@ $(document).ready(function () {
                     if (v <= 0) {
                         value = " ";
                     }
-                    content += `<div class="mine mine_${v} ${oddness}" x="${x}" y="${y}">${value}</div>`
+                    content += `<div class="square mine mine_${v} ${oddness}" x="${x}" y="${y}">${value}</div>`
                 }
             })
             content += '</div>'
@@ -85,7 +84,6 @@ $(document).ready(function () {
 
         $.postJSON(`${back_end}/minesweeper/init`, JSON.stringify(payload), function (data, success) {
             if (success) {
-                $("#game_config").hide()
                 $("#game_board").show()
                 $("#user_ready").on("click", function () {
                     socket.emit("user_ready");
@@ -102,7 +100,6 @@ $(document).ready(function () {
                 return;
             }
 
-            $("#game_config").hide()
             $("#game_board").show()
             for (var key in data) {
                 updateGrid(key, data[key]["status"], data[key]["grid"])

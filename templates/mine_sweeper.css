@@ -1,6 +1,5 @@
 #game_board {
     display: flex;
-    min-height: 700px;
 }
 
 .half_container {
