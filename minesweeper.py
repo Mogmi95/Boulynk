@@ -58,6 +58,7 @@ class MineSweeper():
         if -1. in self.mask * self.field:
             self.status = 'lose'
             self.mask = np.ones((self.nb_lines, self.nb_col), dtype=np.int)
+            self.field = np.where(self.field == 0, -2, self.field)
             return
         if ((self.mask.sum() + len(self.bombPositions)) == (self.nb_col * self.nb_lines)):
             self.status = 'win'
