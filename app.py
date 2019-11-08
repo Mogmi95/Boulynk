@@ -3,6 +3,7 @@ from run import db, app
 from models import Chat, ChatMessage
 import config
 import json
+import minesweeper
 
 @app.route("/")
 def hello():
@@ -17,28 +18,11 @@ def hello():
 def send_file(path):
     return send_from_directory('templates', path)
 
-@app.route("/size/<size>", methods=['POST'])
-def get_size(size):
-    print(size)
-    return size
-
-@app.route("/nb_bomb/<nb_bomb>", methods=['POST'])
-def get_nb_bomb(nb_bomb):
-    print(nb_bomb)
-    return nb_bomb
-
-@app.route("/pos", methods=['POST'])
-def get_pos():
-    pos = request.json(force=True)
-    print(pos)
-    return jsonify(pos)
-
 @app.route("/games/demineur")
 def demineur():
     return render_template(
         "demineur.html",
     )
-
 
 @app.route("/api/homedata")
 def api_data():
@@ -67,4 +51,4 @@ if __name__ == "__main__":
     chat = Chat()
     db.session.add(chat)
     db.session.commit()
-    app.run(port=config.PORT, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=config.PORT, debug=True, threaded=True)

@@ -1,7 +1,9 @@
 import random
 import numpy as np
+from flask import Flask, render_template, request, jsonify
+from run import db, app
 
-class mineSweeper():
+class MineSweeper():
     def __init__(self, nb_lines=3, nb_col = 3, nb_bomb=3):
         self.nb_lines = nb_lines
         self.nb_col   = nb_col
@@ -23,13 +25,9 @@ class mineSweeper():
             for a in range(line-1, line+2):
                 for b in range(col-1, col+2): 
                     self.smartBombAdd(a, b)
-
-        printer = ''    
-        for line in self.field:
-            for elem in line:
-                printer = printer + "{0:03d} ".format(elem)
-            print(printer)
-            printer = '' 
+    
+    def getGrid(self):
+        return self.mask * self.field
 
     def smartBombAdd(self, line, col):
         if ((line < 0) or (col < 0) or (line > self.nb_lines-1) or (col > self.nb_col-1)):
@@ -63,6 +61,33 @@ class mineSweeper():
         else:
             self.status = 'playing'
 
+@app.route("/minesweeper/test", methods=['POST'])
+def test():
+    test = request.get_json()
+    print(test)
+    return jsonify(test)
 
-if __name__ == '__main__':
-    mines = mineSweeper(6,8,9)
+mines = "prout"
+@app.route("/minesweeper/init", methods=['POST'])
+def get_init():
+    global mines
+    init = request.get_json()
+    print(init)
+    size = init['grid_size']
+    nb_bomb = init['nb_bomb']
+    print(size, nb_bomb)
+    mines = MineSweeper(size, size, nb_bomb)
+    grid = mines.getGrid()
+    print(grid)
+    return jsonify(grid.tolist())
+
+@app.route("/minesweeper/pos", methods=['POST'])
+def get_pos():
+    global mines
+    pos = request.get_json()
+    print(pos)
+    X = int(pos['x'])
+    Y = int(pos['y'])
+    status, grid = mines.clickOnTile(X,Y)
+    print(status)
+    return jsonify(grid.tolist())
