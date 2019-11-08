@@ -19,6 +19,7 @@ def load_user(user_id):
 @app.route('/login/<user_id>', methods=['GET', 'POST'])
 def login(user_id=None):
     if user_id is not None:
+        print("User ie not None")
         user = User.query.filter_by(name=user_id).first()
         if user is None:
             flash("NO")
@@ -63,20 +64,16 @@ def api_data():
 
 # Chat
 @app.route("/chat")
-def show_chat():
-    chat = Chat.query.first()
-    return render_template('chat.html', chat=chat)
+def sessions():
+    return render_template('chat.html')
 
-@app.route("/chat/api/add", methods=["POST"])
-def api_add_chat_message():
-    data = json.loads(request.data)
-    add_chat_message(data["message"], data["author"])
-    return "OK"
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
 
-def add_chat_message(message, author):
-    chat = Chat.query.first()
-    chat.messages.append(ChatMessage(message, author))
-    db.session.commit()
+@socketio.on('my event')
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json, callback=messageReceived)
 
 # Codenames
 
