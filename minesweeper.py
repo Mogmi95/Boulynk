@@ -12,18 +12,23 @@ class MineSweeper():
     def __init__(self, nb_lines=3, nb_col = 3, nb_bomb=3):
         self.nb_lines = nb_lines
         self.nb_col   = nb_col
+        self.nb_bomb  = nb_bomb
         self.status   = "playing"
-        self.field    = np.zeros((nb_lines, nb_col), dtype=np.int)
-        self.mask     = np.zeros((nb_lines, nb_col), dtype=np.int)
+        self.score    = 0
+        self.initBoard()
 
-        if (nb_bomb < (nb_col * nb_lines)):
-            self.bombPositions = sorted(random.sample(range(0, nb_col * nb_lines), nb_bomb))
+    def initBoard(self):
+        self.score = 0
+        self.field    = np.zeros((self.nb_lines, self.nb_col), dtype=np.int)
+        self.mask     = np.zeros((self.nb_lines, self.nb_col), dtype=np.int)
+        if (self.nb_bomb < (self.nb_col * self.nb_lines)):
+            self.bombPositions = sorted(random.sample(range(0, self.nb_col * self.nb_lines), self.nb_bomb))
         else:
             raise Exception("Too many bombs!")
 
         for position in self.bombPositions:
-            line = int(position / nb_col)
-            col  = position % nb_col
+            line = int(position / self.nb_col)
+            col  = position % self.nb_col
             # Adding bombs
             self.field[line][col] = -1
             # Adding bomb count around bombs
@@ -43,6 +48,11 @@ class MineSweeper():
             self.field[line][col] = self.field[line][col] + 1
 
     def clickOnTile(self, line, col):
+        if self.score == 0 and self.field[line][col] == -1:
+            print("Reinit board")
+            self.initBoard()
+            self.clickOnTile(line,col)
+        self.score += 1
         if ((line < 0) or (col < 0) or (line > self.nb_lines-1) or (col > self.nb_col-1)):
             return
         self.mask[line][col] = 1
@@ -66,6 +76,9 @@ class MineSweeper():
             self.status = 'win'
         else:
             self.status = 'playing'
+
+    def getScore(self):
+        return self.score
 
 Global_mines = None
 def get_boards():
@@ -148,6 +161,7 @@ def handle_grid_click(pos):
     Y = int(pos['y'])
 
     status, grid = Global_mines[current_user.name].clickOnTile(X, Y)
+    print(Global_mines[current_user.name].getScore())
     board = {
         "status": status,
         "grid": grid.tolist()
