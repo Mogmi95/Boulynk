@@ -5,6 +5,8 @@ from run import db, app, socketio
 from flask_socketio import send, emit
 from boulynk_socket import authenticated_only
 from flask_login import current_user
+import json
+
 
 class MineSweeper():
     def __init__(self, nb_lines=3, nb_col = 3, nb_bomb=3):
@@ -91,10 +93,18 @@ def get_init():
     mines = MineSweeper(size, size, nb_bomb)
     mines2 = mines
     Global_mines = {"paris": mines, "lyon": mines2}
-    socketio.emit('game_update', ({"user_board":Global_mines["paris"].getGrid()}), broadcast=True, room="paris")
-    socketio.emit('game_update', ({"user_board":Global_mines["lyon"].getGrid()}), broadcast=True, room="lyon")
-    socketio.emit('game_update', ({"opponent_board":Global_mines["paris"].getGrid()}), broadcast=True, room="Lyon")
-    socketio.emit('game_update', ({"opponent_board":Global_mines["lyon"].getGrid()}), broadcast=True, room="paris")
+    lyon_board = {
+        "status": Global_mines["lyon"].status,
+        "grid": Global_mines["lyon"].getGrid().tolist()
+    }
+    paris_board = {
+        "status": Global_mines["paris"].status,
+        "grid": Global_mines["paris"].getGrid().tolist()
+    }
+    socketio.emit('game_update', json.dumps({"user_board":paris_board}), broadcast=True, room="paris")
+    socketio.emit('game_update', json.dumps({"user_board":lyon_board}), broadcast=True, room="lyon")
+    socketio.emit('game_update', json.dumps({"opponent_board":paris_board}), broadcast=True, room="lyon")
+    socketio.emit('game_update', json.dumps({"opponent_board":lyon_board}), broadcast=True, room="paris")
     return jsonify({"status":"Waiting"})
 
 # @app.route("/minesweeper/get", methods=['GET'])
@@ -116,20 +126,24 @@ def get_pos():
 @socketio.on('grid_click')
 @authenticated_only
 def handle_grid_click(pos):
+    pos = json.loads(pos)
     global Global_mines
     print(f"{current_user.name} is ready")
     print(pos)
     X = int(pos['x'])
     Y = int(pos['y'])
+
     status, grid = Global_mines[current_user.name].clickOnTile(X, Y)
+    board = {
+        "status": status,
+        "grid": grid.tolist()
+    }
     print(status)
     for user_name in Global_mines:
         if current_user.name == user_name:
-            user_board = Global_mines[user_name].getGrid()
-            socketio.emit('game_update', ({"user_board":grid}), broadcast=True, room=user_name)
+            socketio.emit('game_update', json.dumps({"user_board":board}), broadcast=True, room=user_name)
         else:
-            opponent_board = Global_mines[user_name].getGrid()
-            socketio.emit('game_update', ({"opponent_board":grid}), broadcast=True, room=user_name)
+            socketio.emit('game_update', json.dumps({"opponent_board":board}), broadcast=True, room=user_name)
     # emit('user_ready', f"{current_user.name} is ready", broadcast=True)
 
 

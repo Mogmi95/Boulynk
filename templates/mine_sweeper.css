@@ -1,9 +1,14 @@
 #game_board {
     display: flex;
+    min-height: 700px;
+}
+
+.half_container {
+    flex:1;
+    display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    min-height: 700px;
 }
 
 #win_screen {
