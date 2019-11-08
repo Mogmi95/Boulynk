@@ -1,9 +1,12 @@
 /* Main */
+body {
+    font-family : "Arial";
+}
 #containerSnap{
     position:absolute;
     margin: 0;
     padding: 0;
-    background-color:#ff00ff;
+    background-color:#d7e1e9;
     top: 0;
     left: 0;
     width: 100%;
@@ -83,7 +86,7 @@
     width: 30%;
     top: 15%;
     left: 35%;
-    background-color: #C2F732;
+    background-color: #d7e1e9;
     z-index:1;
     text-align: center;
     border-radius: 15px;
@@ -94,10 +97,13 @@
     width: 30%;
     top: 15%;
     right: 2%;
-    background-color: #C2F732;
+    background-color: whitesmoke;
     z-index:1;
-    text-align: center;
+    text-align: left;
     border-radius: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
 }
 #containerHighScoreCodenames {
     position:absolute;
@@ -105,10 +111,13 @@
     width: 30%;
     top: 28%;
     right: 2%;
-    background-color: #C2F732;
+    background-color: whitesmoke;
     z-index:1;
-    text-align: center;
+    text-align: left;
     border-radius: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
 }
 #left {
     position:absolute;
@@ -116,7 +125,7 @@
     width: 20%;
     top: 0%;
     left: 0%;
-    background-color: #C4C4C4;
+    background-color: #d7e1e9;
     z-index:1;
     text-align: center;
     border-radius: 15px;
@@ -127,7 +136,7 @@
     width: 80%;
     top: 0%;
     left: 20%;
-    background-color: #000000;
+    background-color: #d7e1e9;
     z-index:1;
     text-align: center;
     border-radius: 15px;
