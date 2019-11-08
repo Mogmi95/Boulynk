@@ -1,0 +1,36 @@
+
+.mine {
+    width : 20px;
+    height : 20px
+}
+
+.mine_none {
+    background-color : grey
+}
+
+.mine_0 {
+    background-color : grey
+}
+
+.mine_1 {
+    background-color : lightgrey;
+    color:#0054ff;
+}
+
+.mine_2 {
+    background-color : lightgrey;
+    color:#ff8500;
+}
+
+.mine_3 {
+    background-color : lightgrey;
+    color:#ff4c40;
+}
+.mine_4 {
+    background-color : grey;
+    color:#ff4c40;
+}
+.mine_5 {
+    background-color : grey;
+    color:#ff4c40;
+}

@@ -9,6 +9,10 @@ jQuery["postJSON"] = function( url, data, callback ) {
         url: url,
         type: "POST",
         contentType:"application/json; charset=utf-8",
+        crossDomain:true,
+        headers: {
+            'Access-Control-Allow-Origin': '*'
+        },
         dataType: "json",
         data: data,
         success: callback
