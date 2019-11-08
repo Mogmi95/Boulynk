@@ -1,7 +1,7 @@
 
 
-var back_end = "http://192.168.43.185:5000"
-// var back_end = "http://127.0.0.1:5000"
+// var back_end = "http://192.168.43.185:5000"
+var back_end = "http://127.0.0.1:5000"
 var cell_size = 25
 
 var BOMB_VALUE = -1
@@ -9,28 +9,37 @@ var BOMB_VALUE = -1
 
 $(document).ready(function () {
 
-    function updateGrid(grid) {
-        var content = "";
+    function updateGrid(grid, is_init = false) {
         console.log(grid)
         grid_size = grid.size
-
+        var content = ""
         grid.forEach(function (sub, x) {
-            content += `<div style="padding:0;margin:0;width:${grid_size * cell_size}px;height:${cell_size}px">`
+            content += `<div class="mine_row">`
             sub.forEach(function (v, y) {
                 // col = (y + x) % 2 ? "white" : "black";
-                content += `<div style="padding:0;margin:0;width:${cell_size}px;height:${cell_size}px;background-color: white;display: inline-block" class="mine-sweeper-grid" x="${x}" y="${y}">${v}</div>`
+                value = v
+                if (v <= 0) {
+                    value = " ";
+                }
+                oddness = (x+y) %2 == 0 ? "odd" : "even"
+                content += `<div class="mine mine_${v} ${oddness}" x="${x}" y="${y}">${value}</div>`
             })
             content += '</div>'
         })
+        if (is_init) {
+            content = `<div class='mine_field'>${content}</div>`
+        }
 
         $("#game_board").html(content)
 
 
-        $(".mine-sweeper-grid").on("click", function (e) {
+        $(".mine").on("click", function (e) {
             var payload = { x: parseInt($(this).attr("x")), y: parseInt($(this).attr("y")) }
+            console.log(payload)
             $.postJSON(`${back_end}/minesweeper/pos`, JSON.stringify(payload), function (data, s) {
                 if (s) {
-                    updateGrid(data)
+                    console.log(data["status"])
+                    updateGrid(data["grid"])
                 }
             })
         })
@@ -47,7 +56,8 @@ $(document).ready(function () {
 
         $.postJSON(`${back_end}/minesweeper/init`, JSON.stringify(payload), function (data, success) {
             if (success) {
-                updateGrid(data)
+                console.log(data["status"])
+                updateGrid(data["grid"], data["status"] == "Start")
             } else {
                 console.log("/minesweeper/init failed")
             }

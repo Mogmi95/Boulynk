@@ -1,15 +1,52 @@
 
+.mine_row {
+    display: flex;
+    height : 30px;
+    padding:0;
+    margin:0;
+    line-height : 30px;
+}
+
+.mine_field {
+    animation: 0.9s ease 0s 1 normal both running jello-horizontal;
+    transform: translate3d(0, 0, 0);
+}
+
 .mine {
-    width : 20px;
-    height : 20px
+    border: 1px solid black;
+    width : 30px;
+    height : 30px;
+    padding:0;
+    margin:0;
+    text-align: center;
+    cursor: pointer;
 }
 
-.mine_none {
-    background-color : grey
+.mine.odd{
+    background-color : #efe6e1;
+}
+.mine.odd{
+    background-color : #e1d5c6;
 }
 
-.mine_0 {
-    background-color : grey
+.mine_-2 {
+    background-color : lightgrey;
+    color : lightgrey;
+}
+.mine_0.odd.mine {
+    background-color : #28b862;
+}
+.mine_0.even.mine {
+    background-color : #2dd160;
+}
+
+.mine_-1 {
+    background-color : black;
+    color:red;
+}
+
+.mine_0.odd {
+    background-color : #efe6e1;
 }
 
 .mine_1 {

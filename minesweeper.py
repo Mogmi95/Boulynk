@@ -23,9 +23,9 @@ class MineSweeper():
             self.field[line][col] = -1
             # Adding bomb count around bombs
             for a in range(line-1, line+2):
-                for b in range(col-1, col+2): 
+                for b in range(col-1, col+2):
                     self.smartBombAdd(a, b)
-    
+
     def getGrid(self):
         return self.mask * self.field
 
