@@ -1,13 +1,14 @@
 <html>
 
 <body>
-Hello world!
+Hello {{ current_user.name }}!
 Hello world!
 <br />
 {% for i in [1, 2, 3] %}
 Number is {{ to_show }}, {{ i }}<br />
 {% endfor %}
-
+<br />
+<a href="/logout">LOGOUT</a>
 </body>
 
 </html>

@@ -7,6 +7,40 @@ import random
 
 from run import db
 
+# LOGIN
+
+class User(db.Model):
+    """
+    Describe an user.
+    """
+    __tablename__ = "user"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+
+    def __init__(self, name):
+        self.name = name
+
+    # Flask-Login integration
+    def is_authenticated(self):
+        """Check if the user is authenticated."""
+        return True
+
+    def is_active(self):
+        """Check if the user is active."""
+        return True
+
+    def is_anonymous(self):
+        """Check if the user is anonymous."""
+        return False
+
+    def get_id(self):
+        """Get the user's ID."""
+        return self.id
+
+    def __unicode__(self):
+        """Required for administrative interface."""
+        return str(self.name)
+
 # CHAT
 
 class Chat(db.Model):

@@ -1,18 +1,49 @@
-from flask import render_template, request, jsonify, send_from_directory
-from run import db, app
-from models import Chat, ChatMessage, CodenamesGame
+from flask import render_template, request, jsonify, send_from_directory, flash, request, abort, redirect, url_for
+from wtforms import form, fields, validators
+from flask_login import login_required, login_user, logout_user
+from run import db, app, login_manager
+from models import User, Chat, ChatMessage, CodenamesGame
 import config
 import json
 import minesweeper
 
+# LOGIN
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter_by(id=user_id).first()
+
+
+@app.route("/login", defaults={'user_id': None}, methods=["GET", "POST"])
+@app.route('/login/<user_id>', methods=['GET', 'POST'])
+def login(user_id=None):
+    if user_id is not None:
+        user = User.query.filter_by(name=user_id).first()
+        if user is None:
+            flash("NO")
+            return render_template('login.html')
+        login_user(user)
+        flash('Logged in successfully.')
+        return redirect(url_for('index'))
+    flash("NO")
+    return render_template('login.html')
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+# COMMON ROUTES
+
 @app.route("/")
-def hello():
+@login_required
+def index():
     var = 12345
     return render_template(
         "index.html",
         to_show=var,
         )
-
 
 @app.route('/files/<path:path>')
 def send_file(path):
@@ -77,5 +108,11 @@ if __name__ == "__main__":
     db.create_all()
     chat = Chat()
     db.session.add(chat)
+
+    lyon = User("lyon")
+    paris = User("paris")
+    db.session.add(lyon)
+    db.session.add(paris)
+
     db.session.commit()
     app.run(host='0.0.0.0', port=config.PORT, debug=True, threaded=True)
