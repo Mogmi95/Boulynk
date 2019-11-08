@@ -40,8 +40,10 @@ def logout():
 @app.route("/")
 @login_required
 def index():
+    chat = Chat.query.first()
     return render_template(
-        "main.html"
+        "main.html",
+        chat=chat,
         )
 
 @app.route('/files/<path:path>')
