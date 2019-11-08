@@ -119,3 +119,82 @@
     text-align: center;
     border-radius: 15px;
 }
+
+
+/* GAMES */
+
+.gameBackground {
+    background-color: #F1F1F1;
+}
+
+#containerAnnounce {
+    position:absolute;
+    height: 5%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #0054ff;
+    z-index:1;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    padding-top: 2%;
+}
+#containerChat {
+    position:absolute;
+    height: 100%;
+    width: 25%;
+    top: 0;
+    left: 0;
+    background-color: #FFF;
+    z-index:1;
+}
+#imageVideoChat {
+    position: absolute;
+    left: 4.5%;
+    top: 15%;
+    z-index:1;
+    max-width: 90%;
+    height: auto;
+    border-radius: 5px;
+}
+#containerGame {
+    position:absolute;
+    height: 100%;
+    width: 100%;
+    right: 0;
+    background-color: #2dd160;
+    text-align: center;
+}
+#containerGameScreen {
+    position:absolute;
+    height: 45%;
+    width: 94%;
+    top: 14%;
+    right: 3%;
+    background-color: #F1F1F1;
+    z-index:1;
+}
+#containerGameInfo {
+    position:absolute;
+    height: 15%;
+    width: 36%;
+    bottom: 20%;
+    right: 36%;
+    background-color: white;
+    z-index:1;
+    text-align: center;
+    border-radius: 15px;
+}
+#containerCam {
+    position:absolute;
+    height: 30%;
+    width: 30%;
+    bottom: 5%;
+    right: 3%;
+    background-color: #007FFF;
+    z-index:1;
+    text-align: center;
+    border-radius: 15px;
+}

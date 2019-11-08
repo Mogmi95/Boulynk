@@ -1,6 +1,5 @@
-<html>
-
-<head>
+{% extends "games.html"%}
+{% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script type="text/javascript" src="/files/jquery_extend_api.js"></script>
@@ -9,16 +8,10 @@
     <script type="text/javascript" src="/files/mine_sweeper.js"></script>
     <link rel="stylesheet" type="text/css" href="/files/animation.css">
     <link rel="stylesheet" type="text/css" href="/files/mine_sweeper.css">
-</head>
+{% endblock %}
 
-<body>
-    <!--
-Ask the user the size of the grid and the number of bomb
-Print a Size by Size grid and return the position on click
--->
-
-    <body>
-        <div>
+{% block gamebody %}
+    <div class="gameBackground">
             <div id="game_config" class="half_container">
                 <form action="PayslipServlet" method="get">
                     <p>
@@ -41,8 +34,5 @@ Print a Size by Size grid and return the position on click
                 <div id="user_board" style="flex:3;position:relative" class="half_container"></div>
                 <div id="opponent_board" style="flex:1;position:relative" class="half_container"></div>
             </div>
-        </div>
-    </body>
-</body>
-
-</html>
+    </div>
+{% endblock %}

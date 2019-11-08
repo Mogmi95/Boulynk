@@ -1,0 +1,64 @@
+{% extends "index.html"%}
+{% block body %}
+        <script>
+                jQuery["getJSON"] = function( url, callback ) {
+                    // shift arguments if data argument was omitted
+
+                    return jQuery.ajax({
+                        url: url,
+                        type: "GET",
+                        contentType:"application/json; charset=utf-8",
+                        crossDomain:true,
+                        headers: {
+                            'Access-Control-Allow-Origin': '*'
+                        },
+                        success: callback
+                    });
+                };
+        </script>
+<div id="containerGame">
+
+</div>
+<div id="containerCam">
+    TO DO
+</div>
+<script>
+    var time_today = Date.now();
+    var date_today = new Date(27043200*1000);
+
+    var month = date_today.getMonth()+1;
+    var day = date_today.getDate();
+
+    $.getJSON('https://trombi.corp.netatmo.com//api/persons', function(data){
+        persons = JSON.parse(data);
+
+        var birthdays = [];
+        for (const p of persons) {
+            date_birthday = new Date(p.birthday*1000);
+            if (date_birthday.getMonth()+1 == month && date_birthday.getDate() == day){
+                    birthdays.push(p);
+                }
+        }
+        if (birthdays.length==0)
+        {
+            $('#containerAnnounce').text("Bienvenu sur Boulynk !");
+        }
+        else
+        {
+            $('#containerAnnounce').append("Aujourd'hui c'est l'anniversaire de : ");
+            for (const p of birthdays) {
+                $('#containerAnnounce').append(p.name+" ");
+            }
+            $('#containerAnnounce').append("!");
+        }
+
+    });
+</script>
+<div id="containerAnnounce">
+</div>
+<div id="containerGameScreen">
+        {% block gamebody %}{% endblock %}
+</div>
+<div id="containerGameInfo">
+</div>
+{% endblock %}
