@@ -2,19 +2,42 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    min-height: 700px;
+}
+
+#win_screen {
+    animation: 1.8s ease 0s 1 normal both running jello-horizontal;
+    transform: translate3d(0, 0, 0);
+}
+
+#lose_screen {
+    animation: 1.8s ease 0s 1 normal both running wobble-ver-right;
+    transform: translate3d(0, 0, 0);
+}
+
+#final_screen {
+    position: absolute;
+    top: 0;
+}
+
+#final_screen img {
+    max-height: 700px;
+    min-height: 700px;
+}
+
+.mine_field {
+    top: 0;
+    position: absolute;
 }
 
 .mine_row {
     display: flex;
+    flex-direction: row;
     height: 30px;
     padding: 0;
     margin: 0;
     line-height: 30px;
-}
-
-.mine_field {
-    animation: 0.9s ease 0s 1 normal both running jello-horizontal;
-    transform: translate3d(0, 0, 0);
 }
 
 .mine {
