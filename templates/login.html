@@ -1,5 +1,26 @@
-<h1>LOGIN</h1>
+</html>
+<!doctype html>
 
-<a href="/login/lyon">LYON</a>
-<br />
-<a href="/login/paris">PARIS</a>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Boulynk</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+  <script type="text/javascript" src="/files/jquery_extend_api.js"></script>
+
+  <script type="text/javascript" src="/files/config.js"></script>
+
+    {% block head %} {% endblock %}
+</head>
+
+<body>
+    <h1>LOGIN</h1>
+
+    <a href="/login/lyon">LYON</a>
+    <br />
+    <a href="/login/paris">PARIS</a>
+</body>
+</html>

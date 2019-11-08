@@ -160,7 +160,6 @@ body {
 .gameBackground {
     background-color: #F1F1F1;
 }
-
 #containerAnnounce {
     position:absolute;
     height: 5%;
@@ -207,19 +206,72 @@ body {
     width: 94%;
     top: 14%;
     right: 3%;
-    background-color: #F1F1F1;
+    background-color: #28b862;
     z-index:1;
 }
 #containerGameInfo {
     position:absolute;
-    height: 15%;
-    width: 36%;
-    bottom: 20%;
+    height: 18%;
+    width: 61%;
+    bottom: 17%;
     right: 36%;
     background-color: white;
     z-index:1;
     text-align: center;
     border-radius: 15px;
+}
+#imageScore {
+    position: absolute;
+    right: 15%;
+    top: 22%;
+    z-index:1;
+    max-width: 70%;
+    height: auto;
+}
+#containerRestartButton {
+    position:absolute;
+    height: 5%;
+    width: 15%;
+    bottom: 5%;
+    right: 79%;
+    background-color: #0054ff;
+    color: white;
+    z-index:1;
+    text-align: center;
+    border-radius: 30px;
+    padding-top: 1%;
+    padding-left: 2%;
+    font-weight: bold;
+}
+#imageRestart {
+    position: absolute;
+    left: 20%;
+    top: 15%;
+    z-index:1;
+    max-width: 15%;
+    height: auto;
+}
+#containerGamesButton {
+    position:absolute;
+    height: 5%;
+    width: 15%;
+    bottom: 5%;
+    right: 36%;
+    background-color: white;
+    z-index:1;
+    text-align: center;
+    border-radius: 30px;
+    padding-top: 1%;
+    padding-left: 2%;
+    font-weight: bold;
+}
+#imageBack {
+    position: absolute;
+    left: 15%;
+    top: 15%;
+    z-index:1;
+    max-width: 15%;
+    height: auto;
 }
 #containerCam {
     position:absolute;
@@ -231,4 +283,9 @@ body {
     z-index:1;
     text-align: center;
     border-radius: 15px;
+}
+
+#containerCam img {
+    max-width: 100%;
+    width: auto;
 }
