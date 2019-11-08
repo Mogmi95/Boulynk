@@ -285,6 +285,10 @@ body {
     border-radius: 15px;
 }
 
+#containerGamesButton a {
+    text-decoration: none;
+}
+
 #containerCam img {
     max-width: 100%;
     width: auto;

@@ -35,7 +35,7 @@
         }
         if (birthdays.length==0)
         {
-            $('#containerAnnounce').text("Bienvenu sur Boulynk !");
+            $('#containerAnnounce').text("Bienvenue sur Boulynk !");
         }
         else
         {
@@ -51,6 +51,7 @@
         <div id="containerAnnounce">
         </div>
         <div id="containerGameScreen">
+            {% block gamebody %} {% endblock %}
         </div>
         <div id="containerGameInfo">
             <img id="imageScore" src="/static/images/score-mine-2.png" alt="" />
@@ -59,6 +60,6 @@
             <img id="imageRestart" src="/static/images/restart.png" alt="" /> Restart
         </div>
         <div id="containerGamesButton">
-            <img id="imageBack" src="/static/images/back.png" alt="" /> Back to games
+            <a href="/store"><img id="imageBack" src="/static/images/back.png" alt="" /> Back to games</a>
         </div>
 {% endblock %}
