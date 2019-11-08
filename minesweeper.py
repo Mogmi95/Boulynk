@@ -15,7 +15,6 @@ class MineSweeper():
         self.nb_col   = nb_col
         self.nb_bomb  = nb_bomb
         self.status   = "playing"
-        self.score=0
 
         self.field    = np.zeros((nb_lines, nb_col), dtype=np.int)
         self.mask     = np.zeros((nb_lines, nb_col), dtype=np.int)
@@ -52,10 +51,6 @@ class MineSweeper():
         if ((line < 0) or (col < 0) or (line > self.nb_lines-1) or (col > self.nb_col-1)):
             return
 
-        # if self.score == 0 and self.field[line][col] == -1:
-        #     print("Reinit board")
-        #     self.initBoard()
-        #     self.clickOnTile(line,col)
         if (right == False):
             if (self.flagged[line][col] == 1):
                 return (self.status, self.flaggedField())
@@ -98,8 +93,6 @@ class MineSweeper():
         else:
             self.status = 'playing'
 
-    def getScore(self):
-        return self.score
 
 Global_mines = None
 def get_boards():
