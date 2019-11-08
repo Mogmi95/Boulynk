@@ -51,6 +51,10 @@ class MineSweeper():
         if ((line < 0) or (col < 0) or (line > self.nb_lines-1) or (col > self.nb_col-1)):
             return
 
+        if self.score == 0 and self.field[line][col] == -1:
+            print("Reinit board")
+            self.initBoard()
+            self.clickOnTile(line,col)
         if (right == False):
             if (self.flagged[line][col] == 1):
                 return (self.status, self.flaggedField())
