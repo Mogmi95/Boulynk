@@ -51,6 +51,12 @@ def index():
 def send_file(path):
     return send_from_directory('templates', path)
 
+@app.route("/store")
+def store():
+    return render_template(
+        "store.html",
+    )
+
 @app.route("/games/demineur")
 def demineur():
     return render_template(
