@@ -24,9 +24,9 @@ $(document).ready(function() {
             })
             content += '</div>'
         })
-        if (is_init) {
-            content = `<div class='mine_field'>${content}</div>`
-        }
+        content = `<div class='mine_field'>${content}</div>`
+        content += "<div id=final_screen></div>"
+
 
         $("#game_board").html(content)
 
@@ -37,7 +37,14 @@ $(document).ready(function() {
             $.postJSON(`${back_end}/minesweeper/pos`, JSON.stringify(payload), function(data, s) {
                 if (s) {
                     console.log(data["status"])
+
                     updateGrid(data["grid"])
+                    if (data["status"] == 'win') {
+                        $("#final_screen").html("<img id='win_screen' src='https://img.pngio.com/you-win-png-99-images-in-collection-page-1-win-png-650_468.jpg' />")
+                    } else if (data["status"] == 'lose') {
+                        console.log("loser");
+                        $("#final_screen").html("<img id='lose_screen' src='https://cdn.futura-sciences.com/buildsv6/images/wide1920/4/4/2/44209deae5_96298_bombe-hydrogene.jpg' />")
+                    }
                 }
             })
         })
