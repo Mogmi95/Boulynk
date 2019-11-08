@@ -19,18 +19,27 @@ Print a Size by Size grid and return the position on click
 
     <body>
         <div>
-            <form id="game_config" action="PayslipServlet" method="get">
-                Size (between 10 and 40): <input type="number" name="size" id="size" min="10" max="40"><br /> Nb_Bomb (between 1 and 40): <input type="number" name="nb_bomb" id="nb_bomb" min="1" max="40"><br />
-                <span id="result"></span><br />
-                <input type="button" value="Start !" id="GO">
-            </form>
+            <div id="game_config" class="half_container">
+                <form action="PayslipServlet" method="get">
+                    <p>
+                        Width: <input type="number" name="width" id="width" value=20 min="10" max="30">
+                    </p>
+                    <p>
+                        Height: <input type="number" name="height" id="height" value=30 min="10" max="50">
+                    </p>
+                    <p>
+                        Number of mines: <input type="number" name="nb_bomb" id="nb_bomb" min="1" value="10" max="100">
+                    </p>
+                    <input type="button" value="Start !" id="GO">
+                </form>
+            </div>
             <div id="game_waiting" style="display:none">
                 <button id="user_ready">Let's GO</button>
                 <div id="countdown"></div>
             </div>
             <div id="game_board"  style="display:none">
-                <div id="user_board" class="half_container"></div>
-                <div id="opponent_board" class="half_container"></div>
+                <div id="user_board" style="flex:3;position:relative" class="half_container"></div>
+                <div id="opponent_board" style="flex:1;position:relative" class="half_container"></div>
             </div>
         </div>
     </body>

@@ -1,9 +1,4 @@
 
-var cell_size = 25
-
-var BOMB_VALUE = -1
-
-
 $(document).ready(function () {
 
 
@@ -64,11 +59,13 @@ $(document).ready(function () {
     $("#GO").on("click", function (e) {
 
         // Send size
-        var grid_size = parseInt($('#size').val());
+        var width = parseInt($('#width').val());
+        var height = parseInt($('#height').val());
         var nb_bomb = parseInt($('#nb_bomb').val());
         var payload = {
             "nb_bomb": nb_bomb,
-            "grid_size": grid_size
+            "width": width,
+            "height": height
         }
 
         $.postJSON(`${back_end}/minesweeper/init`, JSON.stringify(payload), function (data, success) {
@@ -84,17 +81,20 @@ $(document).ready(function () {
         })
     });
 
-    // $.getJSON(`${back_end}/minesweeper/get`, function(data, success) {
-    //     if (success) {
-    //         console.log(data["status"])
-    //         if (data["status"] == "no_grid") {
-    //             return
-    //         }
-    //         updateGrid("user_board", data["grid"])
-    //         updateGrid("opponent_board", data["grid"])
-    //     } else {
-    //         console.log("/minesweeper/init failed")
-    //     }
-    // })
+    $.getJSON(`${back_end}/minesweeper/get`, function(data, success) {
+        if (success) {
+            if (data.hasOwnProperty("no_grid")) {
+                return;
+            }
+
+            $("#game_config").hide()
+            $("#game_board").show()
+            for (var key in data) {
+                updateGrid(key, data[key]["status"], data[key]["grid"])
+            }
+        } else {
+            console.log("/minesweeper/init failed")
+        }
+    })
 
 });

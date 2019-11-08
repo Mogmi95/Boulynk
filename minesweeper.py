@@ -13,8 +13,8 @@ class MineSweeper():
         self.nb_lines = nb_lines
         self.nb_col   = nb_col
         self.status   = "playing"
-        self.field    = np.zeros((nb_col, nb_lines), dtype=np.int)
-        self.mask     = np.zeros((nb_col, nb_lines), dtype=np.int)
+        self.field    = np.zeros((nb_lines, nb_col), dtype=np.int)
+        self.mask     = np.zeros((nb_lines, nb_col), dtype=np.int)
 
         if (nb_bomb < (nb_col * nb_lines)):
             self.bombPositions = sorted(random.sample(range(0, nb_col * nb_lines), nb_bomb))
@@ -87,10 +87,10 @@ def get_init():
     global Global_mines
     init = request.get_json()
     print(init)
-    size = init['grid_size']
+    width = init['width']
+    height = init['height']
     nb_bomb = init['nb_bomb']
-    print(size, nb_bomb)
-    mines = MineSweeper(size, size, nb_bomb)
+    mines = MineSweeper(height, width, nb_bomb)
     mines2 = mines
     Global_mines = {"paris": mines, "lyon": mines2}
     lyon_board = {
@@ -105,14 +105,28 @@ def get_init():
     socketio.emit('game_update', json.dumps({"user_board":lyon_board}), broadcast=True, room="lyon")
     socketio.emit('game_update', json.dumps({"opponent_board":paris_board}), broadcast=True, room="lyon")
     socketio.emit('game_update', json.dumps({"opponent_board":lyon_board}), broadcast=True, room="paris")
-    return jsonify({"status":"Waiting"})
+    return jsonify({"status": "Waiting"})
 
-# @app.route("/minesweeper/get", methods=['GET'])
-# def get_minesweeper():
-#     global Global_mines
-#     if mines is None:
-#         return jsonify({"status":"no_grid"})
-#     return jsonify({"status":mines.status, "grid":mines.getGrid().tolist()})
+
+@app.route("/minesweeper/get", methods=['GET'])
+def get_minesweeper():
+    global Global_mines
+    if Global_mines is None:
+        return
+    payload = {}
+    for user_name in Global_mines:
+        if current_user.name == user_name:
+            payload["user_board"] = {
+                "status": Global_mines[user_name].status,
+                "grid": Global_mines[user_name].getGrid().tolist()}
+        else:
+            payload["opponent_board"] = {
+                "status": Global_mines[user_name].status,
+                "grid": Global_mines[user_name].getGrid().tolist()}
+
+    if payload["user_board"]["status"] == "playing" and payload["opponent_board"]["status"] == "playing":
+        return jsonify(payload)
+    return jsonify({"no_grid": True})
 
 
 @app.route("/minesweeper/pos", methods=['POST'])
