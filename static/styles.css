@@ -47,6 +47,7 @@
     width: 30%;
     top: 50%;
     left: 2%;
+    overflow: auto;
     background-color: #007FFF;
     z-index:1;
     text-align: center;
