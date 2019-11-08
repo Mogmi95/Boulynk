@@ -64,3 +64,36 @@
     text-align: center;
     border-radius: 15px;
 }
+#containerGamesGallery {
+    position:absolute;
+    height: 50%;
+    width: 30%;
+    top: 15%;
+    left: 35%;
+    background-color: #C2F732;
+    z-index:1;
+    text-align: center;
+    border-radius: 15px;
+}
+#containerHighScoreDemineur {
+    position:absolute;
+    height: 10%;
+    width: 30%;
+    top: 15%;
+    right: 2%;
+    background-color: #C2F732;
+    z-index:1;
+    text-align: center;
+    border-radius: 15px;
+}
+#containerHighScoreCodenames {
+    position:absolute;
+    height: 10%;
+    width: 30%;
+    top: 28%;
+    right: 2%;
+    background-color: #C2F732;
+    z-index:1;
+    text-align: center;
+    border-radius: 15px;
+}
