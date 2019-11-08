@@ -15,22 +15,6 @@
     <a href="/store"><img src="/static/images/game_header.png" /></a><br/>
 </div>
 <script>
-    jQuery["getJSON"] = function( url, callback ) {
-        // shift arguments if data argument was omitted
-
-        return jQuery.ajax({
-            url: url,
-            type: "GET",
-            contentType:"application/json; charset=utf-8",
-            crossDomain:true,
-            headers: {
-                'Access-Control-Allow-Origin': '*'
-            },
-            success: callback
-        });
-    };
-</script>
-<script>
     var video = document.querySelector("#video");
     if (navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia({ video: true })

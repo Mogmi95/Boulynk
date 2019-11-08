@@ -2,9 +2,7 @@
 
 {% block head %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-    <script type="text/javascript" src="/files/jquery_extend_api.js"></script>
     <script type="text/javascript" src="/files/config.js"></script>
     <script type="text/javascript" src="/files/login.js"></script>
     <script type="text/javascript" src="/files/mine_sweeper.js"></script>
@@ -14,22 +12,6 @@
 {% endblock %}
 
 {% block body %}
-        <script>
-                jQuery["getJSON"] = function( url, callback ) {
-                    // shift arguments if data argument was omitted
-
-                    return jQuery.ajax({
-                        url: url,
-                        type: "GET",
-                        contentType:"application/json; charset=utf-8",
-                        crossDomain:true,
-                        headers: {
-                            'Access-Control-Allow-Origin': '*'
-                        },
-                        success: callback
-                    });
-                };
-        </script>
 <div id="containerGame">
 
 </div>
@@ -43,7 +25,7 @@
     var month = date_today.getMonth()+1;
     var day = date_today.getDate();
 
-    $.getJSON('https://trombi.corp.netatmo.com//api/persons', function(data){
+    $.getJSON('https://trombi.corp.netatmo.com/api/persons', function(data){
         persons = JSON.parse(data);
 
         var birthdays = [];
