@@ -142,7 +142,6 @@ body {
     background-color: #d7e1e9;
     z-index:1;
     text-align: center;
-    border-radius: 15px;
 }
 #right {
     position:absolute;
@@ -153,7 +152,6 @@ body {
     background-color: #d7e1e9;
     z-index:1;
     text-align: center;
-    border-radius: 15px;
 }
 
 
