@@ -4,6 +4,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="/files/jquery_extend_api.js"></script>
     <script type="text/javascript" src="/files/mine_sweeper.js"></script>
+    <link rel="stylesheet" type="text/css" href="/files/animation.css">
     <link rel="stylesheet" type="text/css" href="/files/mine_sweeper.css">
 </head>
 
@@ -16,12 +17,11 @@ Print a Size by Size grid and return the position on click
     <body>
         <div id="game_config">
             <form action="PayslipServlet" method="get">
-                Size (between 10 and 40): <input type="number" name="size" id="size" min="10" max="40"><br />
-                Nb_Bomb (between 1 and 40): <input type="number" name="nb_bomb" id="nb_bomb" min="1" max="40"><br />
+                Size (between 10 and 40): <input type="number" name="size" id="size" min="10" max="40"><br /> Nb_Bomb (between 1 and 40): <input type="number" name="nb_bomb" id="nb_bomb" min="1" max="40"><br />
                 <span id="result"></span><br />
                 <input type="button" value="GO !" id="GO">
             </form>
-        <div id="game_board"></div>
+            <div id="game_board"></div>
         </div>
     </body>
 </body>

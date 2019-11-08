@@ -1,10 +1,15 @@
+#game_board {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .mine_row {
     display: flex;
-    height : 30px;
-    padding:0;
-    margin:0;
-    line-height : 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    line-height: 30px;
 }
 
 .mine_field {
@@ -14,60 +19,65 @@
 
 .mine {
     border: 1px solid black;
-    width : 30px;
-    height : 30px;
-    padding:0;
-    margin:0;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
     text-align: center;
     cursor: pointer;
 }
 
-.mine.odd{
-    background-color : #efe6e1;
+.mine.odd {
+    background-color: #efe6e1;
 }
-.mine.odd{
-    background-color : #e1d5c6;
+
+.mine.odd {
+    background-color: #e1d5c6;
 }
 
 .mine_-2 {
-    background-color : lightgrey;
-    color : lightgrey;
+    background-color: lightgrey;
+    color: lightgrey;
 }
+
 .mine_0.odd.mine {
-    background-color : #28b862;
+    background-color: #28b862;
 }
+
 .mine_0.even.mine {
-    background-color : #2dd160;
+    background-color: #2dd160;
 }
 
 .mine_-1 {
-    background-color : black;
-    color:red;
+    background-color: black;
+    color: red;
 }
 
 .mine_0.odd {
-    background-color : #efe6e1;
+    background-color: #efe6e1;
 }
 
 .mine_1 {
-    background-color : lightgrey;
-    color:#0054ff;
+    background-color: lightgrey;
+    color: #0054ff;
 }
 
 .mine_2 {
-    background-color : lightgrey;
-    color:#ff8500;
+    background-color: lightgrey;
+    color: #ff8500;
 }
 
 .mine_3 {
-    background-color : lightgrey;
-    color:#ff4c40;
+    background-color: lightgrey;
+    color: #ff4c40;
 }
+
 .mine_4 {
-    background-color : grey;
-    color:#ff4c40;
+    background-color: grey;
+    color: #ff4c40;
 }
+
 .mine_5 {
-    background-color : grey;
-    color:#ff4c40;
+    background-color: grey;
+    color: #ff4c40;
 }
