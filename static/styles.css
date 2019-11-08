@@ -119,6 +119,20 @@ body {
     padding-right: 20px;
     padding-top: 10px;
 }
+#containerHighScoreWindBird {
+    position:absolute;
+    height: 10%;
+    width: 30%;
+    top: 41%;
+    right: 2%;
+    background-color: whitesmoke;
+    z-index:1;
+    text-align: left;
+    border-radius: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
 #left {
     position:absolute;
     height: 100%;
