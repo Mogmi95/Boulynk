@@ -14,7 +14,15 @@
 <body>
     Hello {{ current_user.name }}!
     <br />
-    {% block body %} {% endblock %}
+    
+    <div id="left">
+      {% include 'chat.html' %}
+    </div>
+
+    <div id="right">
+      {% block body %} {% endblock %}
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 </body>
