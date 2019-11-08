@@ -6,6 +6,7 @@ from flask_socketio import send, emit
 from boulynk_socket import authenticated_only
 from flask_login import current_user
 import json
+import copy
 
 
 class MineSweeper():
@@ -119,7 +120,7 @@ def get_init():
     height = init['height']
     nb_bomb = init['nb_bomb']
     mines = MineSweeper(height, width, nb_bomb)
-    mines2 = mines
+    mines2 = copy.deepcopy(mines)
     Global_mines = {"paris": mines, "lyon": mines2}
     lyon_board = {
         "status": Global_mines["lyon"].status,

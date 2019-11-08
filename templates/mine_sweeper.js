@@ -23,7 +23,7 @@ $(document).ready(function () {
             sub.forEach(function(v, y) {
                 oddness = (x + y) % 2 == 0 ? "odd" : "even"
                 if (v == -3) {
-                    content += `<div class="mine mine_0 ${oddness}" x="${x}" y="${y}"><img style="max-width:100%";max-height:100% src="/files/flag.png"/></div>`
+                    content += `<div class="square mine mine_0 ${oddness}" x="${x}" y="${y}"><img style="max-width:100%";max-height:100% src="/files/flag.png"/></div>`
 
                 }
                 else
