@@ -12,6 +12,12 @@ def hello():
         to_show=var,
         )
 
+@app.route("/mouse.js")
+def mouse_js():
+    return render_template(
+        "mouse.js"
+    )
+
 @app.route("/jquery_extend_api.js")
 def jquery_extend_api():
     return render_template(
