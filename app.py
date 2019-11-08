@@ -106,13 +106,13 @@ def api_codenames_give_clue(clue):
 
 if __name__ == "__main__":
     db.create_all()
-    chat = Chat()
-    db.session.add(chat)
 
-    lyon = User("lyon")
-    paris = User("paris")
-    db.session.add(lyon)
-    db.session.add(paris)
-
-    db.session.commit()
+    if (len(User.query.all()) == 0):
+        chat = Chat()
+        db.session.add(chat)
+        lyon = User("lyon")
+        paris = User("paris")
+        db.session.add(lyon)
+        db.session.add(paris)
+        db.session.commit()
     app.run(host='0.0.0.0', port=config.PORT, debug=True, threaded=True)
