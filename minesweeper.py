@@ -1,7 +1,10 @@
 import random
 import numpy as np
 from flask import Flask, render_template, request, jsonify
-from run import db, app
+from run import db, app, socketio
+from flask_socketio import send, emit
+from boulynk_socket import authenticated_only
+from flask_login import current_user
 
 class MineSweeper():
     def __init__(self, nb_lines=3, nb_col = 3, nb_bomb=3):
@@ -99,3 +102,10 @@ def get_pos():
     status, grid = mines.clickOnTile(X, Y)
     print(status)
     return jsonify({"status":status, "grid":grid.tolist()})
+
+
+@socketio.on('user_ready')
+@authenticated_only
+def handle_user_ready(message):
+    print(f"{current_user.name} is ready")
+    emit('user_ready', f"{current_user.name} is ready", broadcast=True)

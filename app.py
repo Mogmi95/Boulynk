@@ -1,12 +1,13 @@
 from flask import render_template, request, jsonify, send_from_directory, flash, request, abort, redirect, url_for
 from wtforms import form, fields, validators
-from flask_login import login_required, login_user, logout_user
-from run import db, app, login_manager
+from flask_login import login_required, login_user, logout_user, current_user
+from run import db, app, login_manager, socketio
 from models import User, Chat, ChatMessage, CodenamesGame
 import config
 import json
 import minesweeper
-
+from boulynk_socket import authenticated_only
+from threading import Thread
 # LOGIN
 
 @login_manager.user_loader
@@ -115,4 +116,7 @@ if __name__ == "__main__":
         db.session.add(lyon)
         db.session.add(paris)
         db.session.commit()
+
+    socket_t = Thread(target=socketio.run, group= None, args=[app])
+
     app.run(host='0.0.0.0', port=config.PORT, debug=True, threaded=True)
