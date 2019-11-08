@@ -1,14 +1,21 @@
-<html>
+</html>
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Boulynk</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    {% block head %} {% endblock %}
+</head>
 
 <body>
-Hello {{ current_user.name }}!
-Hello world!
-<br />
-{% for i in [1, 2, 3] %}
-Number is {{ to_show }}, {{ i }}<br />
-{% endfor %}
-<br />
-<a href="/logout">LOGOUT</a>
-</body>
+    Hello {{ current_user.name }}!
+    <br />
+    {% block body %} {% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+</body>
 </html>

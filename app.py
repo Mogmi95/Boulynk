@@ -8,8 +8,8 @@ import json
 import minesweeper
 from boulynk_socket import authenticated_only
 from threading import Thread
-# LOGIN
 
+# LOGIN
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter_by(id=user_id).first()
@@ -40,10 +40,8 @@ def logout():
 @app.route("/")
 @login_required
 def index():
-    var = 12345
     return render_template(
-        "index.html",
-        to_show=var,
+        "main.html"
         )
 
 @app.route('/files/<path:path>')
