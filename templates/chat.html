@@ -28,7 +28,7 @@
       function(e){
         if(e.keyCode==13){
           var msg=$(this).val();
-          $('div.containerChat').append('<div><b style="color: #000">' + "XXXXXXXX" + '</b> ' + msg + '</div>')
+          $('div.containerChat').append('<div><b style="color: #000">' + "{{ current_user.name }}" + '</b> ' + msg + '</div>')
           $('#formChat').val("")
         }
     });
