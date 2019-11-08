@@ -71,7 +71,12 @@
     background-color: #2dd160;
 }
 
-.mine_-1 {
+.mine_-1.odd {
+    background-color: black;
+    color: red;
+}
+
+.mine_-1.even {
     background-color: black;
     color: red;
 }
