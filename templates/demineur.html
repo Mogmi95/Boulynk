@@ -1,6 +1,5 @@
-<html>
-
-<head>
+{% extends "games.html"%}
+{% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script type="text/javascript" src="/files/jquery_extend_api.js"></script>
@@ -9,31 +8,22 @@
     <script type="text/javascript" src="/files/mine_sweeper.js"></script>
     <link rel="stylesheet" type="text/css" href="/files/animation.css">
     <link rel="stylesheet" type="text/css" href="/files/mine_sweeper.css">
-</head>
+{% endblock %}
 
-<body>
-    <!--
-Ask the user the size of the grid and the number of bomb
-Print a Size by Size grid and return the position on click
--->
-
-    <body>
-        <div>
-            <form id="game_config" action="PayslipServlet" method="get">
-                Size (between 10 and 40): <input type="number" name="size" id="size" min="10" max="40"><br /> Nb_Bomb (between 1 and 40): <input type="number" name="nb_bomb" id="nb_bomb" min="1" max="40"><br />
-                <span id="result"></span><br />
-                <input type="button" value="Start !" id="GO">
-            </form>
-            <div id="game_waiting" style="display:none">
-                <button id="user_ready">Let's GO</button>
-                <div id="countdown"></div>
-            </div>
-            <div id="game_board"  style="display:none">
-                <div id="user_board" class="half_container"></div>
-                <div id="opponent_board" class="half_container"></div>
-            </div>
+{% block gamebody %}
+    <div class="gameBackground">
+        <form id="game_config" action="PayslipServlet" method="get">
+            Size (between 10 and 40): <input type="number" name="size" id="size" min="10" max="40"><br /> Nb_Bomb (between 1 and 40): <input type="number" name="nb_bomb" id="nb_bomb" min="1" max="40"><br />
+            <span id="result"></span><br />
+            <input type="button" value="Start !" id="GO">
+        </form>
+        <div id="game_waiting" style="display:none">
+            <button id="user_ready">Let's GO</button>
+            <div id="countdown"></div>
         </div>
-    </body>
-</body>
-
-</html>
+        <div id="game_board"  style="display:none">
+            <div id="user_board" class="half_container"></div>
+            <div id="opponent_board" class="half_container"></div>
+        </div>
+    </div>
+{% endblock %}
