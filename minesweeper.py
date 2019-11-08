@@ -65,44 +65,72 @@ class MineSweeper():
         else:
             self.status = 'playing'
 
+Global_mines = None
+def get_boards():
+    global Global_mines
+    for user_name in Global_mines:
+        if current_user.name == user_name:
+            user_board = Global_mines[user_name].getUserBoard()
+        else:
+            opponent_board = Global_mines[user_name].getOpponentBoard()
+
 @app.route("/minesweeper/test", methods=['POST'])
 def test():
     test = request.get_json()
     print(test)
     return jsonify(test)
 
-mines = None
 @app.route("/minesweeper/init", methods=['POST'])
 def get_init():
-    global mines
+    global Global_mines
     init = request.get_json()
     print(init)
     size = init['grid_size']
     nb_bomb = init['nb_bomb']
     print(size, nb_bomb)
     mines = MineSweeper(size, size, nb_bomb)
-    grid = mines.getGrid()
-    print(grid)
-    return jsonify({"status":"Start", "grid":grid.tolist()})
+    mines2 = mines
+    Global_mines = {"paris": mines, "lyon": mines2}
+    socketio.emit('game_update', ({"user_board":Global_mines["paris"].getGrid()}), broadcast=True, room="paris")
+    socketio.emit('game_update', ({"user_board":Global_mines["lyon"].getGrid()}), broadcast=True, room="lyon")
+    socketio.emit('game_update', ({"opponent_board":Global_mines["paris"].getGrid()}), broadcast=True, room="Lyon")
+    socketio.emit('game_update', ({"opponent_board":Global_mines["lyon"].getGrid()}), broadcast=True, room="paris")
+    return jsonify({"status":"Waiting"})
 
-@app.route("/minesweeper/get", methods=['GET'])
-def get_minesweeper():
-    global mines
-    if mines is None:
-        return jsonify({"status":"no_grid"})
-    return jsonify({"status":mines.status, "grid":mines.getGrid().tolist()})
+# @app.route("/minesweeper/get", methods=['GET'])
+# def get_minesweeper():
+#     global Global_mines
+#     if mines is None:
+#         return jsonify({"status":"no_grid"})
+#     return jsonify({"status":mines.status, "grid":mines.getGrid().tolist()})
 
 
 @app.route("/minesweeper/pos", methods=['POST'])
 def get_pos():
-    global mines
+    global Global_mines
     pos = request.get_json()
+    X = int(pos['x'])
+    Y = int(pos['y'])
+    return jsonify({"status":status, "grid":grid.tolist()})
+
+@socketio.on('grid_click')
+@authenticated_only
+def handle_grid_click(pos):
+    global Global_mines
+    print(f"{current_user.name} is ready")
     print(pos)
     X = int(pos['x'])
     Y = int(pos['y'])
-    status, grid = mines.clickOnTile(X, Y)
+    status, grid = Global_mines[current_user.name].clickOnTile(X, Y)
     print(status)
-    return jsonify({"status":status, "grid":grid.tolist()})
+    for user_name in Global_mines:
+        if current_user.name == user_name:
+            user_board = Global_mines[user_name].getGrid()
+            socketio.emit('game_update', ({"user_board":grid}), broadcast=True, room=user_name)
+        else:
+            opponent_board = Global_mines[user_name].getGrid()
+            socketio.emit('game_update', ({"opponent_board":grid}), broadcast=True, room=user_name)
+    # emit('user_ready', f"{current_user.name} is ready", broadcast=True)
 
 
 @socketio.on('user_ready')

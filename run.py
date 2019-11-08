@@ -8,7 +8,7 @@ from flask_socketio import SocketIO
 # Create the Flask application and the Flask-SQLAlchemy object.
 app = flask.Flask(__name__, static_url_path='/static')
 CORS(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_options="*")
 
 login_manager = LoginManager()
 login_manager.init_app(app)
